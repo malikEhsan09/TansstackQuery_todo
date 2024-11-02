@@ -20,21 +20,22 @@ app.get("/todo", (req, res) => {
   return res.json({ status: "success", data: items });
 });
 
-app.post('/todo/mark-complete',(req,res)=>{
-    const {id} = req.body
-    const itemIndex = db.findIndex((e) => e.id === id)
+app.post('/todo/mark-complete', (req, res) => {
+    const { id } = req.body;
+    const itemIndex = db.findIndex((e) => e.id === id);
 
-    if(itemIndex === -1 )
-        return res.json({status : "error", })
-   
-    db[itemIndex].isCompleted = true
-    return res.json({status : "success"})
-})
+    if (itemIndex === -1) {
+        return res.json({ status: "error" });
+    }
+
+    db[itemIndex].isCompleted = true;
+    return res.json({ status: "success" });
+});
 
 
 app.post("/todo/create", (req, res) => {
     console.log("server creating new todo");
-    const { title = "Untitled Todo" } = req.body; // Default title if title is missing
+    const { title = "Untitled Todo" } = req.body; 
     const id = uuidv4();
     const item = {
         id,
