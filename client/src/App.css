@@ -2,7 +2,7 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 2;
   padding: 0;
-  background-color: #f0f0f0; /* Light background for contrast */
+  background-color: #f0f0f0; 
 }
 
 .app-container {
@@ -11,7 +11,7 @@ body {
   align-items: flex-start;
   padding: 40px;
   color: #333;
-  max-width: 1000px; /* Increased max-width for better layout */
+  max-width: 1000px; 
   margin: auto;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -20,7 +20,7 @@ body {
 
 .todo-section {
   flex: 1;
-  margin-right: 20px; /* Space between todo section and image */
+  margin-right: 20px; 
 }
 
 .app-title {
@@ -57,13 +57,13 @@ body {
 .image-section {
   flex: 1;
   display: flex;
-  justify-content: center; /* Center the image horizontally */
-  align-items: center; /* Center the image vertically */
+  justify-content: center;
+  align-items: center; 
 }
 
 .todo-image {
-  width: 400px; /* Fixed width for the image */
+  width: 400px; 
   height: auto;
-  border-radius: 20px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for the image */
+  border-radius: 20px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
