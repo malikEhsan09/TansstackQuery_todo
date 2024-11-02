@@ -45,31 +45,44 @@ function App() {
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
-    <>
-      <h2>Tanstack React Query</h2>
-      <Form />
-      {data?.data && data.data.length > 0 ? (
-        data.data.map((item) => (
-          <div key={item.id}>
-            <input
-              type="checkbox"
-              checked={item.isCompleted}
-              onChange={() => handleCheckboxChange(item)} // Handle checkbox change
-            />
-            <span
-              style={{
-                textDecoration: item.isCompleted ? "line-through" : "none",
-              }}
-            >
-              {item.title || "Something went wrong while loading"}
-            </span>
-            <p>{item.id}</p>
-          </div>
-        ))
-      ) : (
-        <p>No items found.</p>
-      )}
-    </>
+    <div className="app-container">
+      <div className="todo-section">
+        <h2 className="app-title">Todo List with Tanstack React Query</h2>
+        <Form />
+        <div className="todo-list">
+          {data?.data && data.data.length > 0 ? (
+            data.data.map((item) => (
+              <div className="todo-item" key={item.id}>
+                <input
+                  type="checkbox"
+                  checked={item.isCompleted}
+                  onChange={() => handleCheckboxChange(item)} // Handle checkbox change
+                  className="todo-checkbox"
+                />
+                <span
+                  className="todo-title"
+                  style={{
+                    textDecoration: item.isCompleted ? "line-through" : "none",
+                    color: item.isCompleted ? "#333" : "#333",
+                  }}
+                >
+                  {item.title || "Something went wrong while loading"}
+                </span>
+              </div>
+            ))
+          ) : (
+            <p>No items found.</p>
+          )}
+        </div>
+      </div>
+      <div className="image-section">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRarqRaNNem5is_Ftslm1L_TNXiUe2-yr6dTaX_UBU5nLsqUblWUGp59_VgSBIJiw1zIc0&usqp=CAU"
+          alt="Todo Illustration"
+          className="todo-image"
+        />
+      </div>
+    </div>
   );
 }
 

@@ -3,7 +3,6 @@ import { useState } from "react";
 import styles from "./Form.module.css";
 
 const createTodo = async (text) => {
-  console.log("Creating todo with title:", text);
   const response = await fetch("http://localhost:8800/todo/create", {
     method: "POST",
     headers: {
@@ -14,11 +13,7 @@ const createTodo = async (text) => {
   if (!response.ok) {
     throw new Error("Failed to create todo");
   }
-  const data = await response.json();
-  console.log("Todo created with ID:", data.id);
-  console.log("Todo title:", data.title);
-  console.log("Todo isCompleted:", data.isCompleted);
-  return data;
+  return response.json();
 };
 
 const Form = () => {
@@ -30,7 +25,7 @@ const Form = () => {
     mutationFn: () => createTodo(text),
     onSuccess: () => {
       setShowSuccess(true);
-      setText(""); 
+      setText("");
 
       // Refetch the todos after a new one is added
       queryClient.invalidateQueries(["todo"]);
@@ -49,7 +44,7 @@ const Form = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.formContainer}>
       {showSuccess && (
         <div className={styles.successMessage}>Todo created successfully!</div>
       )}
