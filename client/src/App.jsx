@@ -1,8 +1,10 @@
 import "./App.css";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Form from "./components/Form";
 
 function App() {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["todo"],
     queryFn: async () => {
@@ -14,7 +16,30 @@ function App() {
     },
   });
 
-  console.log("fetching daata", data);
+  // Mutation to mark todo as complete
+  const markCompleteMutation = useMutation({
+    mutationFn: (id) => {
+      return fetch("http://localhost:8800/todo/mark-complete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["todo"]);
+    },
+    onError: (error) => {
+      console.error("Error marking todo as complete:", error);
+    },
+  });
+
+  const handleCheckboxChange = (item) => {
+    // Call the mutation with the item ID
+    markCompleteMutation.mutate(item.id);
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
@@ -29,9 +54,15 @@ function App() {
             <input
               type="checkbox"
               checked={item.isCompleted}
-              onChange={() => {}}
+              onChange={() => handleCheckboxChange(item)} // Handle checkbox change
             />
-            <span>{item.title || "No todo :("}</span>
+            <span
+              style={{
+                textDecoration: item.isCompleted ? "line-through" : "none",
+              }}
+            >
+              {item.title || "Something went wrong while loading"}
+            </span>
             <p>{item.id}</p>
           </div>
         ))
